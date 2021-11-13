@@ -1,40 +1,18 @@
-const express = require("express");
-const multer = require('multer');
-
+const express = require('express');
 const app = express();
+const routes = require('./routes/uploadRoute');
+
+global.__basedir = __dirname;
+
+routes(app);
 const port = 8081;
 
-const filterFile = function(req, file, cb) {
-    const validTypes = ['text/xml', 'application/pdf', 'image/jpeg'];
-    
-
-    if (!validTypes.includes(file.mimetype)){ //TODO: check what a mimetype is
-        const error = new Error("Not valid file type");
-        error.code = "LIMIT_FILE_TYPES"; //TODO: change error code
-        return cb(error, false);
-    }
-
-    cb(null, true);
-}
-
-const upload = multer({
-    dest: './uploads/',
-    filterFile,
+app.listen(port, () => {
+    console.log(`Listening on port: ${port}`);
 })
 
-/* app.get('/', (req, res) => {
-    res.
-})
- */
-app.post('/file-archive-api/upload', upload.single('file'), (req, res) => {
-    res.json({file: req.file, description: req.body.description})
+app.use(function (err, req, res, next) {
+    console.error(err.message);
+    if(!err.statusCode) err.statusCode = 500;
+    res.status(err.statusCode).send(err.message);
 });
-
-app.use(function(err, req, res, next) {
-    if (err.code === "LIMIT_FILE_TYPES"){
-        res.status(422).json({error: 'Allowed file types are: xml, pdf and jpeg'});
-        return;
-    }
-});
-
-app.listen(port, () => console.log(`listening at http://localhost:${port}`));
