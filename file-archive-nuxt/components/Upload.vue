@@ -49,9 +49,24 @@ export default {
       error: false,
       errorMessage: '',
       message: '',
+      files: [],
     }
   },
+  async mounted() {
+    await this.getFiles();
+  },
   methods: {
+    async getFiles() {
+      try {
+        const files = await axios.get('/files')
+          if(files?.data?.length) {
+            this.files = files.data
+          }
+      } catch(err) {
+        console.log(err);
+      }
+    },
+
     selectFile() {
       const file = this.$refs.file.files[0]
       const allowedTypes = ['text/xml', 'application/pdf', 'image/jpeg']
@@ -71,7 +86,7 @@ export default {
       formData.append('file', this.file)
       formData.append('description', this.description)
       try {
-        await axios.post('/file-archive-api/upload', formData)
+        await axios.post('/upload', formData)
         this.message = 'File has been uploaded'
         this.file = ''
         this.description = ''

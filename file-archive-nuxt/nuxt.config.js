@@ -54,7 +54,9 @@ export default {
     }]
   ],
   proxy: {
-    '/file-archive-api/': 'http://localhost:8081'
+    '/files': 'http://localhost:8081/',
+    '/upload': 'http://localhost:8081/',
+    '/download': 'http://localhost:8081/'
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
