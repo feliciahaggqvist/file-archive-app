@@ -54,10 +54,22 @@ export default {
     }]
   ],
   proxy: {
-    '/files': 'http://localhost:8081/',
-    '/upload': 'http://localhost:8081/',
-    '/download': 'http://localhost:8081/',
-    '/delete': 'http://localhost:8081/'
+    '/files':  {
+      target: 'http://localhost:8081/',
+      secure: false,
+    },
+    '/upload': {
+      target: 'http://localhost:8081/',
+      secure: false,
+    },
+    '/download': {
+      target: 'http://localhost:8081/',
+      secure: false,
+    },
+    '/delete': {
+      target: 'http://localhost:8081/',
+      secure: false,
+    },
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
