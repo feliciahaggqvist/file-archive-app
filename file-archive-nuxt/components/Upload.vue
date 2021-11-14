@@ -6,16 +6,16 @@
     >
       <table class="mx-10 my-5">
         <tr>
-          <th class="px-2"></th>
-          <th class="px-2 flex justify-center items-center">
-            File name <!-- <fa icon="sort-down" class="ml-1" /> -->
+          <th class="px-4"></th>
+          <th class="px-4 text-left">
+            File name
           </th>
-          <th class="px-2">Description</th>
-          <th class="px-2">Uploaded by</th>
-          <th class="px-2">Date</th>
+          <th class="px-4 text-left">Description</th>
+          <th class="px-4 text-left">Uploaded by</th>
+          <th class="px-4 text-left">Date</th>
         </tr>
         <tr v-for="file in files" :key="file.filename">
-          <td v-if="file.mimetype" class="mr-2">
+          <td v-if="file.mimetype" class="mr-4">
             <span v-if="file.mimetype === 'text/xml'">
               <fa icon="file-code" style="width: 2rem; height: 2rem" />
             </span>
@@ -26,13 +26,13 @@
               <fa icon="file-image" style="width: 2rem; height: 2rem" />
             </span>
           </td>
-          <td v-if="file.filename" class="truncate max-width-characters px-2">
+          <td v-if="file.filename" class="truncate max-width-characters p-4">
             <a :href="file.url">{{ file.filename }}</a>
           </td>
-          <td class="px-2">{{ file.description }}</td>
-          <td class="px-2">{{ file.uploaded_by }}</td>
-          <td class="px-2">{{ file.uploaded_at }}</td>
-          <td class="pl-2">
+          <td class="p-4">{{ file.description }}</td>
+          <td class="p-4">{{ file.uploaded_by }}</td>
+          <td class="p-4">{{ file.uploaded_at }}</td>
+          <td class="pl-4">
             <fa
               icon="times"
               class="
@@ -49,11 +49,13 @@
     </div>
 
     <button
-      class="mt-4 bg-black text-white border rounded-full pl-2 pr-6 py-1"
+      class="mt-10 bg-black text-white border rounded-full pl-2 pr-6 py-1"
       @click="isUploadModalVisible = true"
     >
       <fa icon="angle-down" style="width: 30px" />Upload file
     </button>
+
+
     <UploadModal
       v-show="isUploadModalVisible"
       @close="isUploadModalVisible = false"
@@ -64,7 +66,7 @@
         </div>
       </template>
       <template #body>
-        <form enctype="multipart/form-data" @submit.prevent="uploadFile" class="flex flex-col justfiy-center items-center p-6">
+        <form enctype="multipart/form-data" class="flex flex-col justfiy-center items-center p-6" @submit.prevent="uploadFile" >
           <div class="flex flex-col justify-center items-center space-y-2 text-sm font-semibold">
             <label for="description" class="flex flex-col w-full"
               >File description
@@ -87,7 +89,7 @@
               />
             </label>
             <label for="file" class="flex flex-col"
-              >Select File <input ref="file" type="file" @change="selectFile" class="border border-solid border-black rounded-lg"
+              >Select File <input ref="file" type="file" class="border border-solid border-black rounded-lg" @change="selectFile" 
             /></label>
             <span v-if="error" class="mt-4 text-red-500">{{ errorMessage }}</span>
           </div>
