@@ -10,14 +10,14 @@
           <th class="px-2">Date</th>
         </tr>
         <tr v-for="file in files" :key="file.name">
-          <td v-if="file.file_type" class="mr-2">
-            <span v-if="file.file_type === 'text/xml'">
+          <td v-if="file.mimetype" class="mr-2">
+            <span v-if="file.mimetype === 'text/xml'">
               <fa icon="file-code" style="width: 2rem; height: 2rem"/>
             </span>
-            <span v-if="file.file_type === 'application/pdf'">
+            <span v-if="file.mimetype === 'application/pdf'">
               <fa icon="file-pdf" style="width: 2rem; height: 2rem"/>
             </span>
-            <span v-if="file.file_type === 'image/jpeg'">
+            <span v-if="file.mimetype === 'image/jpeg'">
               <fa icon="file-image" style="width: 2rem; height: 2rem"/>
             </span>
           </td>

@@ -1,4 +1,5 @@
 const upload = require("../middleware/uploadFile");
+/* const FileSchema = require('../models/FileSchema'); */
 
 const baseUrl = "http://localhost:8081/files/";
 
@@ -13,16 +14,29 @@ const uploadFile = async (req, res) => {
     if (req.file == undefined) {
       return res.status(400).send({ message: " Select a file to upload" });
     }
+      /* let file = new FileSchema({
+        filename: req.file.filename,
+        description: req.body.description,
+        url: baseUrl + req.file.filename,
+        mimetype: req.file.mimetype,
+        uploaded_by: req.body.uploaded_by,
+      });
+
+      try {
+        file = await file.save();
+
+      } catch (error) {
+        console.log(error);
+      } */
+
     /* Remove after implemented db: */
     res.json({
-      file: {
-        name: req.file.filename,
-        url: baseUrl + req.file.filename,
-        file_type: req.file.mimetype,
-        description: req.body.description,
+      filename: req.file.filename,
+      url: baseUrl + req.file.filename,
+      mimetype: req.file.mimetype,
+      /* description: req.body.description,
         uploaded_by: req.body.uploaded_by,
-        uploaded_at: new Date().toISOString(),
-      },
+        uploaded_at: new Date().toISOString()*/
     });
     res.status(200).send({
       message: `The file was uploaded successfully: ${req.file.filename}`,
@@ -51,15 +65,24 @@ const getFiles = (req, res) => {
       filesList.push({
         name: file,
         url: baseUrl + file,
-        file_type: 'text/xml',
-        description: 'this is a file',
-        uploaded_by: 'Felicia',
-        uploaded_at: '2021-11-13',
+        mimetype: "text/xml",
+        description: "this is a file",
+        uploaded_by: "Felicia",
+        uploaded_at: "2021-11-13",
       });
     });
 
     res.status(200).send(filesList);
   });
+  /* try {
+    const files = await FileSchema.find({});
+    res.status(200).send(files);
+  } catch (err) {
+    res.status(400).send({
+      message: `Unable to show files: ${err}`,
+    })
+  } */
+  
 };
 
 const downloadFiles = (req, res) => {
