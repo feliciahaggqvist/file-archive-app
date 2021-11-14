@@ -113,29 +113,12 @@ const deleteFile = (req, res, err) => {
     // return
   }
 
-  // let allUploads
-  // if (!fs.existsSync("../objectStorage.json")) {
-  //   allUploads = []
-  // } else {
-  //   let text = fs.readFileSync("objectStorage.json");
-  //   allUploads = JSON.parse(text);
-  // }
+  if (!fs.existsSync("objectStorage.json")) {
+    allUploads.length = 0
+ }
 
   try {
-    const chosenFile = allUploads?.find((upload) => upload.filename === fileName)
-    if(chosenFile) {
-      const index = allUploads.indexOf(chosenFile)
-      if (index > -1) {
-        allUploads.splice(index, 1)
-      }
-    }
-    fs.writeFile("objectStorage.json", JSON.stringify(allUploads), { flag: "w" }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("File is created successfully.");
-      }
-    });
+    
     /* fs.appendFile('objectStorage.json',JSON.stringify(allUploads), function (err) {
       if (err) {
         console.log(err);
@@ -152,6 +135,20 @@ const deleteFile = (req, res, err) => {
       message: `Unable to delete file`,
     });
   }
+  const chosenFile = allUploads?.find((x) => x.filename === fileName)
+  if(chosenFile) {
+    const index = allUploads.indexOf(chosenFile)
+    if (index > -1) {
+      allUploads.splice(index, 1)
+    }
+  }
+  fs.writeFile("objectStorage.json", JSON.stringify(allUploads), { flag: "w" }, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("File is removed from db.");
+    }
+  });
 };
 
 module.exports = { uploadFile, getFiles, downloadFiles, deleteFile };
