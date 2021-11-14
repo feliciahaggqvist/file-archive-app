@@ -29,11 +29,12 @@ const uploadFile = async (req, res) => {
     });
   }
 
+  allUploads.length = 0;
   if (!fs.existsSync("objectStorage.json")) {
-     allUploads.length = 0
+    
   } else {
     let text = fs.readFileSync("objectStorage.json");
-     allUploads.push(...JSON.parse(text));
+    allUploads.push(...JSON.parse(text));
   }
 
   const content = {
@@ -43,18 +44,23 @@ const uploadFile = async (req, res) => {
     description: req.body.description,
     uploaded_by: req.body.uploaded_by,
     uploaded_at: new Date().toLocaleDateString(),
-  }
+  };
   allUploads.push(content);
   console.log("allUploads: ", allUploads);
   const filename = "objectStorage.json";
 
-  fs.writeFile(filename, JSON.stringify(allUploads), { flag: "w" }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("File is created successfully.");
+  fs.writeFile(
+    filename,
+    JSON.stringify(allUploads),
+    { flag: "w" },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("File is created successfully.");
+      }
     }
-  });
+  );
 };
 
 const getFiles = (req, res) => {
@@ -75,14 +81,14 @@ const getFiles = (req, res) => {
     files.forEach((file) => {
       let fileData = allUploadsDeserialized.find((x) => x.filename === file);
 
-        filesList.push({
-          filename: fileData?.filename,
-          url: fileData?.url,
-          mimetype: fileData?.mimetype,
-          description: fileData?.description,
-          uploaded_by: fileData?.uploaded_by,
-          uploaded_at: fileData?.uploaded_at,
-        });
+      filesList.push({
+        filename: fileData?.filename,
+        url: fileData?.url,
+        mimetype: fileData?.mimetype,
+        description: fileData?.description,
+        uploaded_by: fileData?.uploaded_by,
+        uploaded_at: fileData?.uploaded_at,
+      });
     });
 
     res.status(200).send(filesList);
@@ -113,42 +119,48 @@ const deleteFile = (req, res, err) => {
     // return
   }
 
+  allUploads.length = 0;
   if (!fs.existsSync("objectStorage.json")) {
-    allUploads.length = 0
- }
+  } else {
+    let text = fs.readFileSync("objectStorage.json");
+    allUploads.push(...JSON.parse(text));
+  }
 
   try {
-    
-    /* fs.appendFile('objectStorage.json',JSON.stringify(allUploads), function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('File was successfully deleted from objectStorage.json');
-      }
-    }) */
     unlink(path + fileName);
     res.status(200).send({
       message: `Successfully deleted the file: ${fileName}`,
     });
+
+    const chosenFile = allUploads?.find((x) => x.filename === fileName);
+    if (chosenFile) {
+      if (allUploads.length === 1) {
+        allUploads.length = 0;
+      }
+      const index = allUploads.indexOf(chosenFile);
+      if (index > -1) {
+        allUploads.splice(index, 1);
+      }
+
+      fs.writeFile(
+        "objectStorage.json",
+        JSON.stringify(allUploads),
+        { flag: "w" },
+        function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("File is removed from db.");
+            console.log(allUploads);
+          }
+        }
+      );
+    }
   } catch (err) {
     return res.status(400).send({
       message: `Unable to delete file`,
     });
   }
-  const chosenFile = allUploads?.find((x) => x.filename === fileName)
-  if(chosenFile) {
-    const index = allUploads.indexOf(chosenFile)
-    if (index > -1) {
-      allUploads.splice(index, 1)
-    }
-  }
-  fs.writeFile("objectStorage.json", JSON.stringify(allUploads), { flag: "w" }, function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("File is removed from db.");
-    }
-  });
 };
 
 module.exports = { uploadFile, getFiles, downloadFiles, deleteFile };
