@@ -2,6 +2,7 @@ const upload = require("../middleware/uploadFile");
 
 const baseUrl = "http://localhost:8081/files/";
 const allUploads = [];
+const jsonDbFilepath = "objectStorage.json";
 
 const fs = require("fs");
 const { promisify } = require("util");
@@ -30,8 +31,8 @@ const uploadFile = async (req, res) => {
   }
 
   allUploads.length = 0;
-  if (fs.existsSync("objectStorage.json")) {
-    let text = fs.readFileSync("objectStorage.json");
+  if (fs.existsSync(jsonDbFilepath)) {
+    let text = fs.readFileSync(jsonDbFilepath);
     allUploads.push(...JSON.parse(text));
   }
 
@@ -45,7 +46,7 @@ const uploadFile = async (req, res) => {
   };
   allUploads.push(content);
   console.log("allUploads: ", allUploads);
-  const filename = "objectStorage.json";
+  const filename = jsonDbFilepath;
 
   fs.writeFile(
     filename,
@@ -62,35 +63,9 @@ const uploadFile = async (req, res) => {
 };
 
 const getFiles = (req, res) => {
-  const path = __basedir + "/uploads/";
-  let text = fs.readFileSync("objectStorage.json");
-
+  let text = fs.readFileSync(jsonDbFilepath);
   let allUploadsDeserialized = JSON.parse(text);
-
-  fs.readdir(path, function (err, files) {
-    if (err) {
-      res.status(500).send({
-        message: "Cannot find files.",
-      });
-    }
-
-    let filesList = [];
-
-    files.forEach((file) => {
-      let fileData = allUploadsDeserialized.find((x) => x.filename === file);
-
-      filesList.push({
-        filename: fileData?.filename,
-        url: fileData?.url,
-        mimetype: fileData?.mimetype,
-        description: fileData?.description,
-        uploaded_by: fileData?.uploaded_by,
-        uploaded_at: fileData?.uploaded_at,
-      });
-    });
-
-    res.status(200).send(allUploadsDeserialized);
-  });
+  res.status(200).send(allUploadsDeserialized);
 };
 
 const downloadFiles = (req, res) => {
@@ -118,8 +93,8 @@ const deleteFile = (req, res, err) => {
   }
 
   allUploads.length = 0;
-  if (fs.existsSync("objectStorage.json")) {
-    let text = fs.readFileSync("objectStorage.json");
+  if (fs.existsSync(jsonDbFilepath)) {
+    let text = fs.readFileSync(jsonDbFilepath);
     allUploads.push(...JSON.parse(text));
   }
 
@@ -140,7 +115,7 @@ const deleteFile = (req, res, err) => {
       }
 
       fs.writeFile(
-        "objectStorage.json",
+        jsonDbFilepath,
         JSON.stringify(allUploads),
         { flag: "w" },
         function (err) {

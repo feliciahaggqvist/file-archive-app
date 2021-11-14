@@ -7,9 +7,7 @@
       <table class="mx-10 my-5">
         <tr>
           <th class="px-4"></th>
-          <th class="px-4 text-left">
-            File name
-          </th>
+          <th class="px-4 text-left">File name</th>
           <th class="px-4 text-left">Description</th>
           <th class="px-4 text-left">Uploaded by</th>
           <th class="px-4 text-left">Date</th>
@@ -35,12 +33,7 @@
           <td class="pl-4">
             <fa
               icon="times"
-              class="
-                text-black text-sm
-                w-5
-                h-5
-                cursor-pointer
-              "
+              class="text-black text-sm w-5 h-5 cursor-pointer"
               @click="deleteFile(file.filename)"
             />
           </td>
@@ -55,7 +48,6 @@
       <fa icon="angle-down" style="width: 30px" />Upload file
     </button>
 
-
     <UploadModal
       v-show="isUploadModalVisible"
       @close="isUploadModalVisible = false"
@@ -66,8 +58,21 @@
         </div>
       </template>
       <template #body>
-        <form enctype="multipart/form-data" class="flex flex-col justfiy-center items-center p-6" @submit.prevent="uploadFile" >
-          <div class="flex flex-col justify-center items-center space-y-2 text-sm font-semibold">
+        <form
+          enctype="multipart/form-data"
+          class="flex flex-col justfiy-center items-center p-6"
+          @submit.prevent="uploadFile"
+        >
+          <div
+            class="
+              flex flex-col
+              justify-center
+              items-center
+              space-y-2
+              text-sm
+              font-semibold
+            "
+          >
             <label for="description" class="flex flex-col w-full"
               >File description
               <input
@@ -89,12 +94,23 @@
               />
             </label>
             <label for="file" class="flex flex-col"
-              >Select File <input ref="file" type="file" class="border border-solid border-black rounded-lg" @change="selectFile" 
+              >Select File
+              <input
+                ref="file"
+                type="file"
+                class="border border-solid border-black rounded-lg"
+                @change="selectFile"
             /></label>
-            <span v-if="error" class="mt-4 text-red-500">{{ errorMessage }}</span>
+            <span v-if="error" class="mt-4 text-red-500">{{
+              errorMessage
+            }}</span>
           </div>
 
-          <button class="mt-12 bg-black text-white border rounded-full px-4 py-1">Upload File</button>
+          <button
+            class="mt-12 bg-black text-white border rounded-full px-4 py-1"
+          >
+            Upload File
+          </button>
         </form>
       </template>
     </UploadModal>
@@ -107,7 +123,7 @@ export default {
   data() {
     return {
       isUploadModalVisible: false,
-      uploaded_by: '', 
+      uploaded_by: '',
       description: '',
       file: '',
       error: false,
@@ -123,7 +139,7 @@ export default {
     async getFiles() {
       try {
         const files = await axios.get('/files')
-          this.files = files.data
+        this.files = files.data
       } catch (err) {
         console.log(err)
       }
@@ -176,7 +192,7 @@ export default {
         } else {
           await axios.delete(`/files/${chosenFile.filename}`)
         }
-          this.getFiles()
+        this.getFiles()
       } catch (error) {
         this.errorMessage = `Cannot delete the file: ${error}`
         this.error = true
