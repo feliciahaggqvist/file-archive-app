@@ -1,10 +1,15 @@
 <template>
   <div class="flex flex-col justify-center items-center">
-    <div v-if="files.length" class="mt-20 mb-4 border border-solid border-black shadow-lg rounded-lg">
+    <div
+      v-if="files.length"
+      class="mt-20 border border-solid border-black shadow-lg rounded-lg"
+    >
       <table class="mx-10 my-5">
         <tr>
           <th class="px-2"></th>
-          <th class="px-2 flex justify-center items-center">File name <fa icon="sort-down" class="ml-1"/></th>
+          <th class="px-2 flex justify-center items-center">
+            File name <!-- <fa icon="sort-down" class="ml-1" /> -->
+          </th>
           <th class="px-2">Description</th>
           <th class="px-2">Uploaded by</th>
           <th class="px-2">Date</th>
@@ -12,26 +17,41 @@
         <tr v-for="file in files" :key="file.name">
           <td v-if="file.mimetype" class="mr-2">
             <span v-if="file.mimetype === 'text/xml'">
-              <fa icon="file-code" style="width: 2rem; height: 2rem"/>
+              <fa icon="file-code" style="width: 2rem; height: 2rem" />
             </span>
             <span v-if="file.mimetype === 'application/pdf'">
-              <fa icon="file-pdf" style="width: 2rem; height: 2rem"/>
+              <fa icon="file-pdf" style="width: 2rem; height: 2rem" />
             </span>
             <span v-if="file.mimetype === 'image/jpeg'">
-              <fa icon="file-image" style="width: 2rem; height: 2rem"/>
+              <fa icon="file-image" style="width: 2rem; height: 2rem" />
             </span>
           </td>
           <td v-if="file.name" class="truncate max-width-characters px-2">
             <a :href="file.url">{{ file.name }}</a>
           </td>
-          <td v-if="file.description" class="px-2">{{ file.description }}</td>
-          <td v-if="file.uploaded_by" class="px-2">{{ file.uploaded_by }}</td>
-          <td v-if="file.uploaded_at" class="pl-2">{{ file.uploaded_at }}</td>
+          <td class="px-2">{{ file.description }}</td>
+          <td class="px-2">{{ file.uploaded_by }}</td>
+          <td class="px-2">{{ file.uploaded_at }}</td>
+          <td class="pl-2">
+            <fa
+              icon="times"
+              class="
+                text-black text-sm
+                w-5
+                h-5
+                cursor-pointer
+              "
+              @click="deleteFile(file.name)"
+            />
+          </td>
         </tr>
       </table>
     </div>
 
-    <button class="bg-black text-white border rounded-full px-2 py-1" @click="isUploadModalVisible = true">
+    <button
+      class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+      @click="isUploadModalVisible = true"
+    >
       <fa icon="angle-down" style="width: 30px" />Upload file
     </button>
     <UploadModal
@@ -99,11 +119,6 @@ export default {
   async mounted() {
     await this.getFiles()
   },
-  watch: {
-    async files() {
-      await this.getFiles()
-    },
-  },
   methods: {
     async getFiles() {
       try {
@@ -136,13 +151,34 @@ export default {
       formData.append('description', this.description)
       formData.append('uploaded_by', this.uploaded_by)
       try {
-        await axios.post('/upload', formData)
-        this.message = 'File has been uploaded'
-
-        this.isUploadModalVisible = false
-        this.error = false
+        if (!this.file) {
+          this.error = true
+          this.errorMessage = 'Please select a file to upload'
+        } else {
+          await axios.post('/upload', formData)
+          this.message = 'File has been uploaded'
+          this.isUploadModalVisible = false
+          this.error = false
+          this.getFiles()
+        }
       } catch (error) {
         this.errorMessage = error.response.data.error
+        this.error = true
+      }
+    },
+    async deleteFile(filename) {
+      try {
+        const chosenFile = this.files.find((file) => file.name === filename)
+        if (!chosenFile) {
+          this.error = true
+          this.errorMessage = 'Cannot find the file'
+        } else {
+          console.log('filename: ', chosenFile.name);
+          await axios.delete(`/files/${chosenFile.name}`)
+          this.getFiles()
+        }
+      } catch (error) {
+        this.errorMessage = `Cannot delete the file: ${error}`
         this.error = true
       }
     },

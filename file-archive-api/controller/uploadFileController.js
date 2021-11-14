@@ -1,5 +1,4 @@
 const upload = require("../middleware/uploadFile");
-/* const FileSchema = require('../models/FileSchema'); */
 
 const baseUrl = "http://localhost:8081/files/";
 const allUploads = [];

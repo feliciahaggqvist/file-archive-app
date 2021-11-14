@@ -62,11 +62,7 @@ export default {
       target: 'http://localhost:8081/',
       secure: false,
     },
-    '/download': {
-      target: 'http://localhost:8081/',
-      secure: false,
-    },
-    '/delete': {
+    '/files/:name': {
       target: 'http://localhost:8081/',
       secure: false,
     },
