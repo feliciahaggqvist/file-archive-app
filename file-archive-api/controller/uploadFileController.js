@@ -1,7 +1,7 @@
 const upload = require("../middleware/uploadFile");
 
 const baseUrl = "http://localhost:8081/files/";
-//const allUploads = [];
+const allUploads = [];
 
 const fs = require("fs");
 const { promisify } = require("util");
@@ -29,12 +29,11 @@ const uploadFile = async (req, res) => {
     });
   }
 
-  let allUploads
-  if (!fs.existsSync("../objectStorage.json")) {
-    allUploads = []
+  if (!fs.existsSync("objectStorage.json")) {
+     allUploads.length = 0
   } else {
     let text = fs.readFileSync("objectStorage.json");
-    allUploads = JSON.parse(text);
+     allUploads.push(...JSON.parse(text));
   }
 
   const content = {
