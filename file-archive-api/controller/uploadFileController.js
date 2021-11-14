@@ -48,20 +48,19 @@ const uploadFile = async (req, res) => {
       message: `Error occured: ${error}`,
     });
   }
-  const uploadPackage = {
+  const content = {
     filename: req.file.filename,
     url: baseUrl + req.file.filename,
     mimetype: req.file.mimetype,
     description: req.body.description,
     uploaded_by: req.body.uploaded_by,
     uploaded_at: new Date().toISOString(),
-  };
-  allUploads.push(uploadPackage);
+  }
+  allUploads.push(content);
   console.log("allUploads: ", allUploads);
-  const allUploadsSerialized = JSON.stringify(allUploads);
   const filename = "objectStorage.json";
 
-  fs.writeFile(filename, allUploadsSerialized, { flag: "w" }, function (err) {
+  fs.writeFile(filename, JSON.stringify(allUploads), { flag: "w" }, function (err) {
     if (err) {
       console.log(err);
     } else {
@@ -86,11 +85,11 @@ const getFiles = (req, res) => {
     let filesList = [];
 
     files.forEach((file) => {
-      const fileData = allUploadsDeserialized.find((x) => x.filename === file);
+      let fileData = allUploadsDeserialized.find((x) => x.filename === file);
 
-      if (!fileData) {
+      /* if (!fileData) {
         console.log("Filedata not found");
-      } else {
+      } else { */
         filesList.push({
           name: fileData.filename,
           url: fileData.url,
@@ -99,7 +98,7 @@ const getFiles = (req, res) => {
           uploaded_by: fileData.uploaded_by,
           uploaded_at: fileData.uploaded_at,
         });
-      }
+     /*  } */
     });
 
     res.status(200).send(filesList);
