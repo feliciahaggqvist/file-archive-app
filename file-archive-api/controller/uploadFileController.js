@@ -54,7 +54,7 @@ const uploadFile = async (req, res) => {
     mimetype: req.file.mimetype,
     description: req.body.description,
     uploaded_by: req.body.uploaded_by,
-    uploaded_at: new Date().toISOString(),
+    uploaded_at: new Date().toLocaleDateString(),
   }
   allUploads.push(content);
   console.log("allUploads: ", allUploads);
@@ -91,14 +91,14 @@ const getFiles = (req, res) => {
         console.log("Filedata not found");
       } else { */
         filesList.push({
-          name: fileData.filename,
-          url: fileData.url,
-          mimetype: fileData.mimetype,
-          description: fileData.description,
-          uploaded_by: fileData.uploaded_by,
-          uploaded_at: fileData.uploaded_at,
+          name: fileData?.filename,
+          url: fileData?.url,
+          mimetype: fileData?.mimetype,
+          description: fileData?.description,
+          uploaded_by: fileData?.uploaded_by,
+          uploaded_at: fileData?.uploaded_at,
         });
-     /*  } */
+      /* } */
     });
 
     res.status(200).send(filesList);

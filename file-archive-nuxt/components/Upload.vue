@@ -99,11 +99,11 @@ export default {
   async mounted() {
     await this.getFiles()
   },
-  /* watch: {
+  watch: {
     async files() {
       await this.getFiles()
     },
-  }, */
+  },
   methods: {
     async getFiles() {
       try {
@@ -119,7 +119,7 @@ export default {
     selectFile() {
       const file = this.$refs.file.files[0]
       const allowedTypes = ['text/xml', 'application/pdf', 'image/jpeg']
-      if (allowedTypes.includes(file.type)) {
+      if (allowedTypes.includes(file?.type)) {
         this.file = file
         this.error = false
         this.message = ''
