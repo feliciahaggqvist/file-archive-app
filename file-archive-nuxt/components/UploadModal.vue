@@ -1,7 +1,7 @@
 <template>
   <transition name="modal-fade">
     <div class="fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center backdrop-color" @click="close">
-      <div class="relative rounded-sm max-w-full bg-white overflow-x-auto flex flex-col mt-0 mr-5 shadow-sm" @click.stop>
+      <div class="relative rounded-lg max-w-full bg-white overflow-x-auto flex flex-col mt-0 mr-5 shadow-sm" @click.stop>
         <fa icon="times" class="text-black text-sm w-5 h-5 absolute right-5 top-5 cursor-pointer" @click="close" />
         <header v-if="hasHeaderSlot" class="m-5 flex-start justify-between text-xl">
           <slot name="header"></slot>

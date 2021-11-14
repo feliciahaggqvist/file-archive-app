@@ -49,7 +49,7 @@
     </div>
 
     <button
-      class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+      class="mt-4 bg-black text-white border rounded-full pl-2 pr-6 py-1"
       @click="isUploadModalVisible = true"
     >
       <fa icon="angle-down" style="width: 30px" />Upload file
@@ -59,40 +59,40 @@
       @close="isUploadModalVisible = false"
     >
       <template #header>
-        <div>
-          <h1>Upload file</h1>
+        <div class="flex justify-center items-center">
+          <h1 class="font-bold text-xl">Upload file</h1>
         </div>
       </template>
       <template #body>
-        <form enctype="multipart/form-data" @submit.prevent="sendFile">
-          <div>
-            <label for="description"
+        <form enctype="multipart/form-data" @submit.prevent="uploadFile" class="flex flex-col justfiy-center items-center p-6">
+          <div class="flex flex-col justify-center items-center space-y-2 text-sm font-semibold">
+            <label for="description" class="flex flex-col w-full"
               >File description
               <input
                 id="description"
                 v-model="description"
                 type="text"
                 name="description"
-                placeholder="File Description"
+                class="py-0.5 border border-solid border-black rounded-lg"
               />
             </label>
-            <label for="uploadedBy"
-              >Updated by:
+            <label for="uploadedBy" class="flex flex-col w-full"
+              >Uploaded by
               <input
                 id="uploaded_by"
                 v-model="uploaded_by"
                 type="text"
                 name="uploaded_by"
-                placeholder="Uploaded by"
+                class="py-0.5 border border-solid border-black rounded-lg"
               />
             </label>
-            <label for="file"
-              >Select File <input ref="file" type="file" @change="selectFile"
+            <label for="file" class="flex flex-col"
+              >Select File <input ref="file" type="file" @change="selectFile" class="border border-solid border-black rounded-lg"
             /></label>
-            <span v-if="error">{{ errorMessage }}</span>
+            <span v-if="error" class="mt-4 text-red-500">{{ errorMessage }}</span>
           </div>
 
-          <button>Upload File</button>
+          <button class="mt-12 bg-black text-white border rounded-full px-4 py-1">Upload File</button>
         </form>
       </template>
     </UploadModal>
@@ -143,7 +143,7 @@ export default {
       }
     },
 
-    async sendFile() {
+    async uploadFile() {
       const formData = new FormData()
       formData.append('file', this.file)
       formData.append('description', this.description)
@@ -156,6 +156,9 @@ export default {
           await axios.post('/upload', formData)
           this.message = 'File has been uploaded'
           this.isUploadModalVisible = false
+          this.desription = ''
+          this.uploaded_by = ''
+          this.file = ''
           this.error = false
           this.getFiles()
         }
