@@ -160,7 +160,7 @@ export default {
           this.getFiles()
         }
       } catch (error) {
-        this.errorMessage = error.response.data.error
+        this.errorMessage = 'Unable to upload file'
         this.error = true
       }
     },

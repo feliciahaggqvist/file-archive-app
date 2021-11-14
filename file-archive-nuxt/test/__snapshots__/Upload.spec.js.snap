@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Upload render component when files do not exist, component is rendered correctly 1`] = `
+<div
+  class="flex flex-col justify-center items-center"
+>
+  <!---->
+   
+  <button
+    class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+  >
+    <fa-stub
+      icon="angle-down"
+      style="width: 30px;"
+    />
+    Upload file
+  
+  </button>
+   
+  <uploadmodal-stub
+    style="display: none;"
+  />
+</div>
+`;
+
+exports[`Upload render component when files exists, component is rendered correctly 1`] = `
+<div
+  class="flex flex-col justify-center items-center"
+>
+  <div
+    class="mt-20 border border-solid border-black shadow-lg rounded-lg"
+  >
+    <table
+      class="mx-10 my-5"
+    >
+      <tr>
+        <th
+          class="px-2"
+        />
+         
+        <th
+          class="px-2 flex justify-center items-center"
+        >
+          
+          File name 
+        </th>
+         
+        <th
+          class="px-2"
+        >
+          Description
+        </th>
+         
+        <th
+          class="px-2"
+        >
+          Uploaded by
+        </th>
+         
+        <th
+          class="px-2"
+        >
+          Date
+        </th>
+      </tr>
+       
+      <tr>
+        <td
+          class="mr-2"
+        >
+          <!---->
+           
+          <!---->
+           
+          <span>
+            <fa-stub
+              icon="file-image"
+              style="width: 2rem; height: 2rem;"
+            />
+          </span>
+        </td>
+         
+        <td
+          class="truncate max-width-characters px-2"
+        >
+          <a
+            href="http://localhost:8081/files/cake-1636911777243.jpg"
+          >
+            cake-1636911777243.jpg
+          </a>
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          this is a jpg file
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          Felicia
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          14/11/2021
+        </td>
+         
+        <td
+          class="pl-2"
+        >
+          <fa-stub
+            class="
+              text-black text-sm
+              w-5
+              h-5
+              cursor-pointer
+            "
+            icon="times"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="mr-2"
+        >
+          <!---->
+           
+          <span>
+            <fa-stub
+              icon="file-pdf"
+              style="width: 2rem; height: 2rem;"
+            />
+          </span>
+           
+          <!---->
+        </td>
+         
+        <td
+          class="truncate max-width-characters px-2"
+        >
+          <a
+            href="http://localhost:8081/files/pdf-sample-1636911816661.pdf"
+          >
+            pdf-sample-1636911816661.pdf
+          </a>
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          this is a pdf
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          Felicia
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          14/11/2021
+        </td>
+         
+        <td
+          class="pl-2"
+        >
+          <fa-stub
+            class="
+              text-black text-sm
+              w-5
+              h-5
+              cursor-pointer
+            "
+            icon="times"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="mr-2"
+        >
+          <span>
+            <fa-stub
+              icon="file-code"
+              style="width: 2rem; height: 2rem;"
+            />
+          </span>
+           
+          <!---->
+           
+          <!---->
+        </td>
+         
+        <td
+          class="truncate max-width-characters px-2"
+        >
+          <a
+            href="http://localhost:8081/files/test-1636911753512.xml"
+          >
+            test-1636911753512.xml
+          </a>
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          this is an xml file
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          Felicia
+        </td>
+         
+        <td
+          class="px-2"
+        >
+          14/11/2021
+        </td>
+         
+        <td
+          class="pl-2"
+        >
+          <fa-stub
+            class="
+              text-black text-sm
+              w-5
+              h-5
+              cursor-pointer
+            "
+            icon="times"
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+   
+  <button
+    class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+  >
+    <fa-stub
+      icon="angle-down"
+      style="width: 30px;"
+    />
+    Upload file
+  
+  </button>
+   
+  <uploadmodal-stub
+    style="display: none;"
+  />
+</div>
+`;
