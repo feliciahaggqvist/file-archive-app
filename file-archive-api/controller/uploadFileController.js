@@ -1,7 +1,7 @@
 const upload = require("../middleware/uploadFile");
 
 const baseUrl = "http://localhost:8081/files/";
-const allUploads = [];
+//const allUploads = [];
 
 const fs = require("fs");
 const { promisify } = require("util");
@@ -28,6 +28,15 @@ const uploadFile = async (req, res) => {
       message: `Error occured: ${error}`,
     });
   }
+
+  let allUploads
+  if (!fs.existsSync("../objectStorage.json")) {
+    allUploads = []
+  } else {
+    let text = fs.readFileSync("objectStorage.json");
+    allUploads = JSON.parse(text);
+  }
+
   const content = {
     filename: req.file.filename,
     url: baseUrl + req.file.filename,
@@ -102,7 +111,16 @@ const deleteFile = (req, res, err) => {
     res.status(500).send({
       message: `No such file: ${err}`,
     });
+    // return
   }
+
+  // let allUploads
+  // if (!fs.existsSync("../objectStorage.json")) {
+  //   allUploads = []
+  // } else {
+  //   let text = fs.readFileSync("objectStorage.json");
+  //   allUploads = JSON.parse(text);
+  // }
 
   try {
     const chosenFile = allUploads?.find((upload) => upload.filename === fileName)
