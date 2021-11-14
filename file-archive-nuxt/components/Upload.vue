@@ -14,7 +14,7 @@
           <th class="px-2">Uploaded by</th>
           <th class="px-2">Date</th>
         </tr>
-        <tr v-for="file in files" :key="file.name">
+        <tr v-for="file in files" :key="file.filename">
           <td v-if="file.mimetype" class="mr-2">
             <span v-if="file.mimetype === 'text/xml'">
               <fa icon="file-code" style="width: 2rem; height: 2rem" />
@@ -26,8 +26,8 @@
               <fa icon="file-image" style="width: 2rem; height: 2rem" />
             </span>
           </td>
-          <td v-if="file.name" class="truncate max-width-characters px-2">
-            <a :href="file.url">{{ file.name }}</a>
+          <td v-if="file.filename" class="truncate max-width-characters px-2">
+            <a :href="file.url">{{ file.filename }}</a>
           </td>
           <td class="px-2">{{ file.description }}</td>
           <td class="px-2">{{ file.uploaded_by }}</td>
@@ -41,7 +41,7 @@
                 h-5
                 cursor-pointer
               "
-              @click="deleteFile(file.name)"
+              @click="deleteFile(file.filename)"
             />
           </td>
         </tr>
@@ -105,10 +105,8 @@ export default {
   data() {
     return {
       isUploadModalVisible: false,
-      name: '',
-      url: '',
+      uploaded_by: '', 
       description: '',
-      uploaded_by: '',
       file: '',
       error: false,
       errorMessage: '',
@@ -168,13 +166,12 @@ export default {
     },
     async deleteFile(filename) {
       try {
-        const chosenFile = this.files.find((file) => file.name === filename)
+        const chosenFile = this.files.find((file) => file.filename === filename)
         if (!chosenFile) {
           this.error = true
           this.errorMessage = 'Cannot find the file'
         } else {
-          console.log('filename: ', chosenFile.name);
-          await axios.delete(`/files/${chosenFile.name}`)
+          await axios.delete(`/files/${chosenFile.filename}`)
           this.getFiles()
         }
       } catch (error) {

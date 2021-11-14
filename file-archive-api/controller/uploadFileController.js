@@ -68,7 +68,7 @@ const getFiles = (req, res) => {
       let fileData = allUploadsDeserialized.find((x) => x.filename === file);
 
         filesList.push({
-          name: fileData?.filename,
+          filename: fileData?.filename,
           url: fileData?.url,
           mimetype: fileData?.mimetype,
           description: fileData?.description,
