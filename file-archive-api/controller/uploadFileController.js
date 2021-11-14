@@ -30,9 +30,7 @@ const uploadFile = async (req, res) => {
   }
 
   allUploads.length = 0;
-  if (!fs.existsSync("objectStorage.json")) {
-    
-  } else {
+  if (fs.existsSync("objectStorage.json")) {
     let text = fs.readFileSync("objectStorage.json");
     allUploads.push(...JSON.parse(text));
   }
@@ -91,7 +89,7 @@ const getFiles = (req, res) => {
       });
     });
 
-    res.status(200).send(filesList);
+    res.status(200).send(allUploadsDeserialized);
   });
 };
 
@@ -120,8 +118,7 @@ const deleteFile = (req, res, err) => {
   }
 
   allUploads.length = 0;
-  if (!fs.existsSync("objectStorage.json")) {
-  } else {
+  if (fs.existsSync("objectStorage.json")) {
     let text = fs.readFileSync("objectStorage.json");
     allUploads.push(...JSON.parse(text));
   }

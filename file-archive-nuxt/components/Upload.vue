@@ -123,9 +123,7 @@ export default {
     async getFiles() {
       try {
         const files = await axios.get('/files')
-        if (files?.data?.length) {
           this.files = files.data
-        }
       } catch (err) {
         console.log(err)
       }
@@ -177,8 +175,8 @@ export default {
           this.errorMessage = 'Cannot find the file'
         } else {
           await axios.delete(`/files/${chosenFile.filename}`)
-          this.getFiles()
         }
+          this.getFiles()
       } catch (error) {
         this.errorMessage = `Cannot delete the file: ${error}`
         this.error = true
