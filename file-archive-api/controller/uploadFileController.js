@@ -104,7 +104,7 @@ const deleteFile = (req, res, err) => {
       message: `Successfully deleted the file: ${fileName}`,
     });
 
-    const chosenFile = allUploads?.find((x) => x.filename === fileName);
+    const chosenFile = allUploads?.find((content) => content.filename === fileName);
     if (chosenFile) {
       if (allUploads.length === 1) {
         allUploads.length = 0;

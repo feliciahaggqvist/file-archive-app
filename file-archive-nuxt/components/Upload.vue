@@ -7,7 +7,7 @@
       <table class="mx-10 my-5">
         <tr>
           <th class="px-4"></th>
-          <th class="px-4 text-left">File name</th>
+          <th class="px-4 text-left">Filename</th>
           <th class="px-4 text-left">Description</th>
           <th class="px-4 text-left">Uploaded by</th>
           <th class="px-4 text-left">Date</th>
@@ -140,8 +140,9 @@ export default {
       try {
         const files = await axios.get('/files')
         this.files = files.data
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        this.errorMessage = `Cannot get files: ${error}`
+        this.error = true
       }
     },
 
@@ -172,14 +173,14 @@ export default {
           await axios.post('/upload', formData)
           this.message = 'File has been uploaded'
           this.isUploadModalVisible = false
-          this.desription = ''
+          this.description = ''
           this.uploaded_by = ''
           this.file = ''
           this.error = false
           this.getFiles()
         }
       } catch (error) {
-        this.errorMessage = 'Unable to upload file'
+        this.errorMessage = `Cannot upload file: ${error}`
         this.error = true
       }
     },
@@ -194,7 +195,7 @@ export default {
         }
         this.getFiles()
       } catch (error) {
-        this.errorMessage = `Cannot delete the file: ${error}`
+        this.errorMessage = `Cannot delete file: ${error}`
         this.error = true
       }
     },

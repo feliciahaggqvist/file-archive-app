@@ -7,7 +7,7 @@ exports[`Upload render component when files do not exist, component is rendered 
   <!---->
    
   <button
-    class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+    class="mt-10 bg-black text-white border rounded-full pl-2 pr-6 py-1"
   >
     <fa-stub
       icon="angle-down"
@@ -35,30 +35,29 @@ exports[`Upload render component when files exists, component is rendered correc
     >
       <tr>
         <th
-          class="px-2"
+          class="px-4"
         />
          
         <th
-          class="px-2 flex justify-center items-center"
+          class="px-4 text-left"
         >
-          
-          File name 
+          Filename
         </th>
          
         <th
-          class="px-2"
+          class="px-4 text-left"
         >
           Description
         </th>
          
         <th
-          class="px-2"
+          class="px-4 text-left"
         >
           Uploaded by
         </th>
          
         <th
-          class="px-2"
+          class="px-4 text-left"
         >
           Date
         </th>
@@ -66,7 +65,7 @@ exports[`Upload render component when files exists, component is rendered correc
        
       <tr>
         <td
-          class="mr-2"
+          class="mr-4"
         >
           <!---->
            
@@ -81,7 +80,7 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="truncate max-width-characters px-2"
+          class="truncate max-width-characters p-4"
         >
           <a
             href="http://localhost:8081/files/cake-1636911777243.jpg"
@@ -91,40 +90,35 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           this is a jpg file
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           Felicia
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           14/11/2021
         </td>
          
         <td
-          class="pl-2"
+          class="pl-4"
         >
           <fa-stub
-            class="
-              text-black text-sm
-              w-5
-              h-5
-              cursor-pointer
-            "
+            class="text-black text-sm w-5 h-5 cursor-pointer"
             icon="times"
           />
         </td>
       </tr>
       <tr>
         <td
-          class="mr-2"
+          class="mr-4"
         >
           <!---->
            
@@ -139,7 +133,7 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="truncate max-width-characters px-2"
+          class="truncate max-width-characters p-4"
         >
           <a
             href="http://localhost:8081/files/pdf-sample-1636911816661.pdf"
@@ -149,40 +143,35 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           this is a pdf
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           Felicia
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           14/11/2021
         </td>
          
         <td
-          class="pl-2"
+          class="pl-4"
         >
           <fa-stub
-            class="
-              text-black text-sm
-              w-5
-              h-5
-              cursor-pointer
-            "
+            class="text-black text-sm w-5 h-5 cursor-pointer"
             icon="times"
           />
         </td>
       </tr>
       <tr>
         <td
-          class="mr-2"
+          class="mr-4"
         >
           <span>
             <fa-stub
@@ -197,7 +186,7 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="truncate max-width-characters px-2"
+          class="truncate max-width-characters p-4"
         >
           <a
             href="http://localhost:8081/files/test-1636911753512.xml"
@@ -207,33 +196,28 @@ exports[`Upload render component when files exists, component is rendered correc
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           this is an xml file
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           Felicia
         </td>
          
         <td
-          class="px-2"
+          class="p-4"
         >
           14/11/2021
         </td>
          
         <td
-          class="pl-2"
+          class="pl-4"
         >
           <fa-stub
-            class="
-              text-black text-sm
-              w-5
-              h-5
-              cursor-pointer
-            "
+            class="text-black text-sm w-5 h-5 cursor-pointer"
             icon="times"
           />
         </td>
@@ -242,7 +226,7 @@ exports[`Upload render component when files exists, component is rendered correc
   </div>
    
   <button
-    class="mt-4 bg-black text-white border rounded-full px-2 py-1"
+    class="mt-10 bg-black text-white border rounded-full pl-2 pr-6 py-1"
   >
     <fa-stub
       icon="angle-down"

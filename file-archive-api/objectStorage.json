@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "filename": "test-1636928463826.xml",
+    "url": "http://localhost:8081/files/test-1636928463826.xml",
+    "mimetype": "text/xml",
+    "description": "this is an xml file",
+    "uploaded_by": "Felicia",
+    "uploaded_at": "14/11/2021"
+  },
+  {
+    "filename": "pdf-sample-1636928544739.pdf",
+    "url": "http://localhost:8081/files/pdf-sample-1636928544739.pdf",
+    "mimetype": "application/pdf",
+    "description": "this is a pdf",
+    "uploaded_by": "Felicia",
+    "uploaded_at": "14/11/2021"
+  },
+  {
+    "filename": "cake-1636928603305.jpg",
+    "url": "http://localhost:8081/files/cake-1636928603305.jpg",
+    "mimetype": "image/jpeg",
+    "description": "this is a jpg file",
+    "uploaded_by": "Felicia",
+    "uploaded_at": "14/11/2021"
+  }
+]
