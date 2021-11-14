@@ -2,6 +2,7 @@ const upload = require("../middleware/uploadFile");
 /* const FileSchema = require('../models/FileSchema'); */
 
 const baseUrl = "http://localhost:8081/files/";
+const allUploads = [];
 
 const fs = require("fs");
 const { promisify } = require("util");
@@ -14,7 +15,7 @@ const uploadFile = async (req, res) => {
     if (req.file == undefined) {
       return res.status(400).send({ message: " Select a file to upload" });
     }
-      /* let file = new FileSchema({
+    /* let file = new FileSchema({
         filename: req.file.filename,
         description: req.body.description,
         url: baseUrl + req.file.filename,
@@ -34,23 +35,46 @@ const uploadFile = async (req, res) => {
       filename: req.file.filename,
       url: baseUrl + req.file.filename,
       mimetype: req.file.mimetype,
-      /* description: req.body.description,
-        uploaded_by: req.body.uploaded_by,
-        uploaded_at: new Date().toISOString()*/
+      description: req.body.description,
+      uploaded_by: req.body.uploaded_by,
+      uploaded_at: new Date().toISOString(),
     });
-    res.status(200).send({
-      message: `The file was uploaded successfully: ${req.file.filename}`,
-    });
+    /* res.status(200).send({
+      message: 'The file was uploaded successfully',
+    }); */
   } catch (error) {
     console.log(error);
     res.status(500).send({
       message: `Error occured: ${error}`,
     });
   }
+  const uploadPackage = {
+    filename: req.file.filename,
+    url: baseUrl + req.file.filename,
+    mimetype: req.file.mimetype,
+    description: req.body.description,
+    uploaded_by: req.body.uploaded_by,
+    uploaded_at: new Date().toISOString(),
+  };
+  allUploads.push(uploadPackage);
+  console.log("allUploads: ", allUploads);
+  const allUploadsSerialized = JSON.stringify(allUploads);
+  const filename = "objectStorage.json";
+
+  fs.writeFile(filename, allUploadsSerialized, { flag: "w" }, function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("File is created successfully.");
+    }
+  });
 };
 
 const getFiles = (req, res) => {
   const path = __basedir + "/uploads/";
+  let text = fs.readFileSync("objectStorage.json");
+
+  let allUploadsDeserialized = JSON.parse(text);
 
   fs.readdir(path, function (err, files) {
     if (err) {
@@ -62,14 +86,20 @@ const getFiles = (req, res) => {
     let filesList = [];
 
     files.forEach((file) => {
-      filesList.push({
-        name: file,
-        url: baseUrl + file,
-        mimetype: "text/xml",
-        description: "this is a file",
-        uploaded_by: "Felicia",
-        uploaded_at: "2021-11-13",
-      });
+      const fileData = allUploadsDeserialized.find((x) => x.filename === file);
+
+      if (!fileData) {
+        console.log("Filedata not found");
+      } else {
+        filesList.push({
+          name: fileData.filename,
+          url: fileData.url,
+          mimetype: fileData.mimetype,
+          description: fileData.description,
+          uploaded_by: fileData.uploaded_by,
+          uploaded_at: fileData.uploaded_at,
+        });
+      }
     });
 
     res.status(200).send(filesList);
@@ -82,7 +112,6 @@ const getFiles = (req, res) => {
       message: `Unable to show files: ${err}`,
     })
   } */
-  
 };
 
 const downloadFiles = (req, res) => {
