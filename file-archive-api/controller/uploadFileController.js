@@ -15,22 +15,6 @@ const uploadFile = async (req, res) => {
     if (req.file == undefined) {
       return res.status(400).send({ message: " Select a file to upload" });
     }
-    /* let file = new FileSchema({
-        filename: req.file.filename,
-        description: req.body.description,
-        url: baseUrl + req.file.filename,
-        mimetype: req.file.mimetype,
-        uploaded_by: req.body.uploaded_by,
-      });
-
-      try {
-        file = await file.save();
-
-      } catch (error) {
-        console.log(error);
-      } */
-
-    /* Remove after implemented db: */
     res.json({
       filename: req.file.filename,
       url: baseUrl + req.file.filename,
@@ -39,9 +23,6 @@ const uploadFile = async (req, res) => {
       uploaded_by: req.body.uploaded_by,
       uploaded_at: new Date().toISOString(),
     });
-    /* res.status(200).send({
-      message: 'The file was uploaded successfully',
-    }); */
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -87,9 +68,6 @@ const getFiles = (req, res) => {
     files.forEach((file) => {
       let fileData = allUploadsDeserialized.find((x) => x.filename === file);
 
-      /* if (!fileData) {
-        console.log("Filedata not found");
-      } else { */
         filesList.push({
           name: fileData?.filename,
           url: fileData?.url,
@@ -98,19 +76,10 @@ const getFiles = (req, res) => {
           uploaded_by: fileData?.uploaded_by,
           uploaded_at: fileData?.uploaded_at,
         });
-      /* } */
     });
 
     res.status(200).send(filesList);
   });
-  /* try {
-    const files = await FileSchema.find({});
-    res.status(200).send(files);
-  } catch (err) {
-    res.status(400).send({
-      message: `Unable to show files: ${err}`,
-    })
-  } */
 };
 
 const downloadFiles = (req, res) => {
@@ -137,6 +106,27 @@ const deleteFile = (req, res, err) => {
   }
 
   try {
+    const chosenFile = allUploads?.find((upload) => upload.filename === fileName)
+    if(chosenFile) {
+      const index = allUploads.indexOf(chosenFile)
+      if (index > -1) {
+        allUploads.splice(index, 1)
+      }
+    }
+    fs.writeFile("objectStorage.json", JSON.stringify(allUploads), { flag: "w" }, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("File is created successfully.");
+      }
+    });
+    /* fs.appendFile('objectStorage.json',JSON.stringify(allUploads), function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('File was successfully deleted from objectStorage.json');
+      }
+    }) */
     unlink(path + fileName);
     res.status(200).send({
       message: `Successfully deleted the file: ${fileName}`,
