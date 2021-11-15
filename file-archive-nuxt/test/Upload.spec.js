@@ -42,7 +42,6 @@ const mockUploadedFiles = [
   }
 
 describe('Upload', () => {
-  describe('render component', () => {
     const wrapper = shallowMount(Upload, {
         localVue,
         stubs,
@@ -53,16 +52,21 @@ describe('Upload', () => {
         expect(wrapper.element).toMatchSnapshot();
     }) 
 
-    test('when files exists, component is rendered correctly', async () => {
+    test('when files exist, component is rendered correctly', async () => {
         await wrapper.setData({
             files: mockUploadedFiles
         });
+        
+        expect(wrapper.element).toMatchSnapshot();
+      })
+      
+      test('when getFiles is successful, files data prop is set correctly', async () => {
+        axios.get.mockImplementationOnce(() => Promise.resolve(mockUploadedFiles))
+        
+        await wrapper.vm.getFiles;
+        
         expect(axios.get).toHaveBeenCalled()
         expect(axios.get).toHaveBeenCalledWith('/files')
-
-        expect(wrapper.element).toMatchSnapshot();
+        expect(wrapper.vm.files).toEqual(mockUploadedFiles)
     })
-
-    
-  })
 })

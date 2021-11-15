@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Upload render component when files do not exist, component is rendered correctly 1`] = `
+exports[`Upload when files do not exist, component is rendered correctly 1`] = `
 <div
   class="flex flex-col justify-center items-center"
 >
@@ -23,7 +23,7 @@ exports[`Upload render component when files do not exist, component is rendered 
 </div>
 `;
 
-exports[`Upload render component when files exists, component is rendered correctly 1`] = `
+exports[`Upload when files exist, component is rendered correctly 1`] = `
 <div
   class="flex flex-col justify-center items-center"
 >
@@ -39,9 +39,15 @@ exports[`Upload render component when files exists, component is rendered correc
         />
          
         <th
-          class="px-4 text-left"
+          class="px-4 text-left flex"
         >
+          
           Filename
+          
+          <fa-stub
+            class="ml-2 items-center"
+            icon="sort-down"
+          />
         </th>
          
         <th
