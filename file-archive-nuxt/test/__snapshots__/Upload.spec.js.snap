@@ -45,7 +45,7 @@ exports[`Upload when files exist, component is rendered correctly 1`] = `
           Filename
           
           <fa-stub
-            class="ml-2 items-center"
+            class="ml-2 cursor-pointer items-center"
             icon="sort-down"
           />
         </th>
@@ -89,6 +89,7 @@ exports[`Upload when files exist, component is rendered correctly 1`] = `
           class="truncate max-width-characters p-4"
         >
           <a
+            class="hover:underline"
             href="http://localhost:8081/files/cake-1636911777243.jpg"
           >
             cake-1636911777243.jpg
@@ -142,6 +143,7 @@ exports[`Upload when files exist, component is rendered correctly 1`] = `
           class="truncate max-width-characters p-4"
         >
           <a
+            class="hover:underline"
             href="http://localhost:8081/files/pdf-sample-1636911816661.pdf"
           >
             pdf-sample-1636911816661.pdf
@@ -195,6 +197,7 @@ exports[`Upload when files exist, component is rendered correctly 1`] = `
           class="truncate max-width-characters p-4"
         >
           <a
+            class="hover:underline"
             href="http://localhost:8081/files/test-1636911753512.xml"
           >
             test-1636911753512.xml
