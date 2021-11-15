@@ -12,7 +12,7 @@
             <fa
               :icon="iconSort"
               :class="ascSort ? 'self-end' : 'items-center'"
-              class="ml-2"
+              class="ml-2 cursor-pointer"
               @click="toggleSort()"
             />
           </th>
@@ -33,7 +33,7 @@
             </span>
           </td>
           <td v-if="file.filename" class="truncate max-width-characters p-4">
-            <a :href="file.url">{{ file.filename }}</a>
+            <a :href="file.url" class="hover:underline">{{ file.filename }}</a>
           </td>
           <td class="p-4">{{ file.description }}</td>
           <td class="p-4">{{ file.uploaded_by }}</td>
