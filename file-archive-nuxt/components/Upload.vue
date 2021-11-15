@@ -7,7 +7,15 @@
       <table class="mx-10 my-5">
         <tr>
           <th class="px-4"></th>
-          <th class="px-4 text-left">Filename</th>
+          <th class="px-4 text-left flex">
+            Filename
+            <fa
+              :icon="iconSort"
+              :class="ascSort ? 'self-end' : 'items-center'"
+              class="ml-2"
+              @click="toggleSort()"
+            />
+          </th>
           <th class="px-4 text-left">Description</th>
           <th class="px-4 text-left">Uploaded by</th>
           <th class="px-4 text-left">Date</th>
@@ -125,12 +133,18 @@ export default {
       isUploadModalVisible: false,
       uploaded_by: '',
       description: '',
+      ascSort: false,
       file: '',
       error: false,
       errorMessage: '',
       message: '',
       files: [],
     }
+  },
+  computed: {
+    iconSort() {
+      return this.ascSort ? 'sort-up' : 'sort-down'
+    },
   },
   async mounted() {
     await this.getFiles()
@@ -140,10 +154,39 @@ export default {
       try {
         const files = await axios.get('/files')
         this.files = files.data
+        this.files.sort(this.sortDesc)
+        this.ascSort = false
       } catch (error) {
         this.errorMessage = `Cannot get files: ${error}`
         this.error = true
       }
+    },
+
+    toggleSort() {
+      this.ascSort = !this.ascSort
+      this.ascSort
+        ? this.files.sort(this.sortAsc)
+        : this.files.sort(this.sortDesc)
+    },
+
+    sortAsc(a, b) {
+      if (a.filename < b.filename) {
+        return -1
+      }
+      if (a.filename > b.filename) {
+        return 1
+      }
+      return 0
+    },
+
+    sortDesc(a, b) {
+      if (a.filename > b.filename) {
+        return -1
+      }
+      if (a.filename < b.filename) {
+        return 1
+      }
+      return 0
     },
 
     selectFile() {
