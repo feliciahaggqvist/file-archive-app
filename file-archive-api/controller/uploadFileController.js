@@ -45,7 +45,7 @@ const uploadFile = async (req, res) => {
     uploaded_at: new Date().toLocaleDateString(),
   };
   allUploads.push(content);
-  console.log("allUploads: ", allUploads);
+
   const filename = jsonDbFilepath;
 
   fs.writeFile(
@@ -81,7 +81,7 @@ const downloadFiles = (req, res) => {
   });
 };
 
-const deleteFile = (req, res, err) => {
+const deleteFile = async (req, res, err) => {
   const fileName = req.params.name;
   const path = __basedir + "/uploads/";
 
@@ -89,7 +89,6 @@ const deleteFile = (req, res, err) => {
     res.status(500).send({
       message: `No such file: ${err}`,
     });
-    // return
   }
 
   allUploads.length = 0;
@@ -99,19 +98,22 @@ const deleteFile = (req, res, err) => {
   }
 
   try {
-    unlink(path + fileName);
+    await unlink(path + fileName);
     res.status(200).send({
       message: `Successfully deleted the file: ${fileName}`,
     });
 
-    const chosenFile = allUploads?.find((content) => content.filename === fileName);
+    const chosenFile = allUploads?.find(
+      (content) => content.filename === fileName
+    );
     if (chosenFile) {
       if (allUploads.length === 1) {
         allUploads.length = 0;
-      }
-      const index = allUploads.indexOf(chosenFile);
-      if (index > -1) {
-        allUploads.splice(index, 1);
+      } else {
+        const index = allUploads.indexOf(chosenFile);
+        if (index > -1) {
+          allUploads.splice(index, 1);
+        }
       }
 
       fs.writeFile(
